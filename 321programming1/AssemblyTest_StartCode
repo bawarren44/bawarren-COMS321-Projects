@@ -1,0 +1,110 @@
+start:
+B arrayBuilder //dump
+
+
+doASwap:
+//sets up the swap between X0 and X1
+ADDI X0, X0, #3
+ADDI X1, X1, #5
+PRNT X0
+PRNT X1
+PRNT X9
+B swap
+
+
+
+addandsubtest:
+//Add and subtract, test method
+ADDI X19, X19, #4
+PRNT X19
+SUBI X19, X19, #3
+PRNT X19
+
+
+dump:
+DUMP
+B done
+
+
+swap:
+//Swaps the values in X0 and X1
+ADDI X9, X0, #0
+ADDI X0, X1, #0
+ADDI X1, X9, #0
+PRNT X0
+PRNT X1
+PRNT X9
+B done
+
+
+compare:
+//compares registers X2 and X3 - sets X19 to 1 if same, 0 if not
+SUB X15, X2, X3
+CBZ X15, setTrue
+B setFalse
+
+setTrue:
+ADDI X19, XZR, #1
+PRNT X19
+B done
+
+setFalse:
+ADDI X19, XZR, #0
+PRNT X19
+B done
+
+arrayBuilder:
+//uses X14 as counter for array size
+//ASSUME: The number of elements in the array is the int stored in X4
+//Multiply 8 * number in X14 for the total bytes to allocate to the Stack Pointer
+//Store temp multiplied value in X10
+
+ADDI X14, X14, #10
+ADD X13, X13, X14 
+PRNT X13
+B mult
+
+mult:
+ADDI X10, X10, #8
+SUBI X14, X14, #1
+CBNZ X14, mult //Adds 8 "X14" number of times
+SUBI SP, SP, #88	//increment the stack pointer
+CBZ X14, values //finishes building array, adds values
+
+values:
+//Adds values for X15 and X16
+ADDI X16, X16, #3 
+ADDI X15, X15, #5
+B store
+
+store:
+STUR X16, [SP, #0]
+STUR X15, [SP, #8]
+STUR X16, [SP, #16]
+STUR X15, [SP, #24]
+STUR X16, [SP, #32]
+STUR X15, [SP, #40]
+STUR X16, [SP, #48]
+STUR X15, [SP, #56]
+STUR X16, [SP, #64]
+STUR X15, [SP, #72]
+STUR X16, [SP, #80]
+LDUR X16, [SP, #72]
+PRNT X16
+B fill
+
+fill:
+LDUR X9, [XZR,#0]
+PRNT X9
+B done
+
+loop:
+LSL X10, X9, #3
+ADD X11, X0, X10
+SUB X13, X2, X9 // This is size - i
+STUR XZR, [X11,X13] // Attempt to store a[i] = size - i Crashes program
+ADDI X9, X9, #1
+CMP X9, X1
+B.LT loop
+
+done:

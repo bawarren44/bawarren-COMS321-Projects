@@ -1,0 +1,157 @@
+//Brad Warren - bawarren
+//Joshua Beck - joshbeck
+//Com Sci 321 - PA1
+//Feb 17, 2020
+
+//Print statements left in:
+//Int filled at each address, shown as a countdown
+//Separator print statement, XZR, for readability
+//Final int at each address after sort, shown as count up
+//Additionally, a dump statement after finish
+
+//Main method
+main:
+//INPUT INSTRUCTIONS - Array at address 16 - Array 237 ints
+ADDI X0, X0, #16
+ADDI X1, X1, #237
+B fill
+fillDone:
+
+PRNT XZR //Separator print between Fill and Sort
+
+B bubbleSort
+bubbleDone:
+B print
+//End main
+
+
+//Begin fill
+fill: 
+//Stores array pointer in saved register X20 - Pointer starts at X0 - array size is from X1
+//stores index i in X21
+//value for a[i] is in X10
+//X11 is temp variable
+
+ADD X20, X20, X0
+ADD X10, X10, X1
+SUB X21, X21, X21
+
+fillLoop:
+
+LSL X11, X21, #3
+ADD X11, X11, X20
+STUR X10, [X11, #0]
+PRNT X10 //Pre sort print
+ADDI X21, X21, #1
+SUBI X10, X10, #1
+SUB X15, X21, X1
+CBZ X15, fillDone
+B fillLoop
+//End fill
+
+
+
+//Percolate
+percolate:
+//Array pointer is saved in X20 - Pointer starts at X0, goes to X23-#1 - 
+//X12 is temp var for mem location
+//X25 is i
+SUB X25, X25, X25
+SUB X14, X14, X14
+SUBI X14, X23, #1
+SUBS XZR, X14, X25
+B.GT percLoop
+B bubbleInc
+
+percLoop:
+LSL X12, X25, #3
+ADD X12, X12, X20
+LDUR X4, [X12, #0]
+LDUR X5, [X12, #8]
+B compare
+doneCompare:
+SUBI X13, X19, #1
+CBNZ X13, incrementStep
+ADD X6, X4, XZR
+ADD X7, X5, XZR
+B swap
+swapDone:
+STUR X6, [X12, #0]
+STUR X7, [X12, #8]
+
+incrementStep:
+ADDI X25, X25, #1
+SUBS XZR, X14, X25
+B.GT percLoop
+B bubbleInc
+//End Percolate
+
+
+//Bubble Sort
+bubbleSort:
+// X21 is our i so we fist zero it out
+// X20 is our array pointer
+// X23 is our size - 1
+SUB X21, X21, X21
+SUB X11, X11, X11
+SUBI X23, X1, #0 
+
+bubbleLoop:
+
+LSL X11, X21, #3
+ADD X11, X11, X20
+SUBS XZR, X21, X23
+B.EQ bubbleDone
+B percolate
+
+bubbleInc:
+ADDI X21, X21, #1
+B bubbleLoop
+//End Bubble Sort
+
+//Compare
+compare:
+//compares registers X4 and X5 - sets X19 to 1 if X4 . X5, 0 if not
+SUBS XZR, X4, X5
+SUB X19, X19, X19
+B.GT setTrue
+B setFalse
+
+setTrue:
+ADDI X19, XZR, #1
+B doneCompare
+
+setFalse:
+ADDI X19, XZR, #0
+B doneCompare
+//End compare
+
+//Swap
+swap: //The swap function uses input registers X6 and X7
+ADDI X9, X6, #0
+ADDI X6, X7, #0
+ADDI X7, X9, #0
+B swapDone
+//End swap
+
+//Final Print
+print:
+//print out the sorted array
+ADD X20, X0, XZR
+SUB X21, X21, X21
+
+fillLoopTwo:
+LSL X11, X21, #3
+ADD X11, X11, X20
+LDUR X10, [X11, #0]
+SUB X15, X21, X1
+CBZ X15, done
+PRNT X10 //Post sort print
+ADDI X21, X21, #1
+SUBI X10, X10, #1
+B fillLoopTwo
+//End Print
+
+done:
+DUMP
+
