@@ -1,0 +1,7 @@
+opcode 580, rd 10, rt 10, rn 31, rm 8, shamt 0, aluimm 512, dtaddr 128, condaddr 16415, braddr 17302506
+opcode 580, rd 7, rt 10, rn 31, rm 8, shamt 0, aluimm 69, dtaddr 128, condaddr 16415, braddr 17302506
+opcode 2045, rd 7, rt 7, rn 31, rm 8, shamt 0, aluimm 69, dtaddr 128, condaddr 16415, braddr 17302506
+opcode 180, rd 7, rt 7, rn 31, rm 8, shamt 0, aluimm 69, dtaddr 128, condaddr 0, braddr 2
+opcode 2045, rd 7, rt 7, rn 31, rm 8, shamt 0, aluimm 69, dtaddr 128, condaddr 16415, braddr 17302506
+opcode 580, rd 10, rt 10, rn 31, rm 8, shamt 0, aluimm 420, dtaddr 128, condaddr 16415, braddr 17302506
+opcode 2046, rd 10, rt 10, rn 31, rm 8, shamt 0, aluimm 130, dtaddr 128, condaddr 16415, braddr 17302506
