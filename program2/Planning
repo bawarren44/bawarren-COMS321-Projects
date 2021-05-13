@@ -1,0 +1,87 @@
+Put name to which one you are working on, and done if complete
+
+* ADD
+* ADDI
+* AND
+* ANDI
+* B
+* B.cond: This is a CB instruction in which the Rt field is not a register,
+          but a code that indicates the condition extension.  These have the
+          values (base 16):
+            * 0: EQ
+            * 1: NE
+            * 2: HS
+            * 3: LO
+            * 4: MI
+            * 5: PL
+            * 6: VS
+            * 7: VC
+            * 8: HI
+            * 9: LS
+            * a: GE
+            * b: LT
+            * c: GT
+            * d: LE
+          There is a single bit condition register associated with each of
+          these codes.  The branch is taken if and only if the corresponding
+          condition bit is set.  Bits are set and reset by SUBS and SUBIS.
+* BL
+* BR: This is an R instruction.  Only the opcode and Rn fields are used.  The
+      remaining bits are don't-care.
+* CBNZ
+* CBZ 
+* DUMP: This is an added instruction that will display the contents of all
+        registers and memory, as well as the disassembled program (branch
+        targets are given as the PC-relative offset from the branch
+        instruction).  More details below.  This is an R instruction.  The
+        opcode is 11111111110.  All other bits are don't-care. 
+* EOR 
+* EORI
+* HALT: This is an added instruction that will trigger a DUMP and terminate
+        the emulator.  This is an R instruction.  The opcode is 11111111111.
+        All other bits are don't-care.
+* LDUR
+* LDURB
+* LDURH
+* LDURSW
+* LSL: This is an R instruction.  The shift ammount goes in the shamt field,
+       while Rm is unused.
+* LSR: Same as LSL
+* MUL
+* ORR
+* ORRI
+* PRNL: This is an added instruction that will print a blank line.  This is
+        an R instruction.  The opcode is 11111111100.  All other bits are
+        don't care. 
+* PRNT: This is an added instruction that prints a register name and its
+        contents in hex and decimal.  This is an R instruction.  The opcode
+        is 11111111101.  The register is given in the Rd field.  All other
+        bits are don't-care.
+* SDIV
+* SMULH
+* STUR 
+* STURB
+* STURH
+* STURW
+* SUB
+* SUBI
+* SUBIS: This instruction--and SUBS--sets condition bits after subtracting.
+         The results of the subtraction, S, gives the following values for
+         the condition bits:
+           * EQ = S == 0
+           * GE = S >= 0
+           * GT = S > 0
+           * HI = S > 0
+           * HS = S >= 0
+           * LE = S <= 0
+           * LO = S < 0
+           * LS = S <= 0
+           * LT = S < 0
+           * MI = S < 0
+           * NE = S != 0
+           * PL = S >= 0
+           * VC = 0
+           * VS = 0
+* SUBS
+* UDIV 
+* UMULH

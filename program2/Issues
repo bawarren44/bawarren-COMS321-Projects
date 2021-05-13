@@ -1,0 +1,43 @@
+ADD - good
+AND - good
+BR - good
+DUMP - good
+EOR - good
+HALT - good
+LSL - good
+LSR - good
+MUL - good
+ORR - good
+PRNL - good
+PRNT - good
+SUB - good
+SUBS - good
+ 
+
+I-instructions:
+
+ADDI - good
+ANDI - good (immediate overflows)
+EORI - good (immediate overflows)
+ORRI - good (immediate overflows)
+SUBI - good (immediate overflows)
+SUBIS - good (immediate overflows)
+ 
+
+D-instructions:
+
+LDUR - good
+STUR - good
+ 
+
+B-instructions:
+
+B - good
+BL - good
+ 
+
+CB-instructions:
+
+B.cond - good
+CBNZ - good
+CBZ - good
