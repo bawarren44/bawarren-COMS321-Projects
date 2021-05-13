@@ -4,4 +4,4 @@
 
 * Program2 contains files to implement ARM functions with C code. The code to do this is located in main.c.
 
-* 
+* cs321-pa2 contains files to simulate an emulator.
